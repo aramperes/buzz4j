@@ -1,0 +1,2 @@
+rootProject.name = 'buzz4j'
+include 'buzz4jni'
