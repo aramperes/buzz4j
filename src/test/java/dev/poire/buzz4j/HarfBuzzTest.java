@@ -20,7 +20,16 @@ public class HarfBuzzTest {
     @Test
     public void testShapeString() throws Exception {
         String input = "whatever";
-        String output = HarfBuzz.shapeString(font(), input);
-        Assertions.assertEquals("\u007Bhatever", output);
+        ShapeGlyph[] output = HarfBuzz.shapeString(font(), input);
+        Assertions.assertArrayEquals(new ShapeGlyph[]{
+                new ShapeGlyph(90, 786, 0, 0, 0),
+                new ShapeGlyph(75, 618, 0, 0, 0),
+                new ShapeGlyph(68, 561, 0, 0, 0),
+                new ShapeGlyph(87, 361, 0, 0, 0),
+                new ShapeGlyph(72, 544, 0, 0, 0),
+                new ShapeGlyph(89, 508, 0, 0, 0),
+                new ShapeGlyph(72, 564, 0, 0, 0),
+                new ShapeGlyph(85, 413, 0, 0, 0),
+        }, output);
     }
 }

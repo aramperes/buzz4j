@@ -3,8 +3,11 @@ package dev.poire.buzz4j;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 public class HarfBuzz {
+
+    private static final int GLYPH_LENGTH = 5;
 
     static {
         System.loadLibrary("png16-16");
@@ -13,18 +16,28 @@ public class HarfBuzz {
         System.loadLibrary("buzz4jni");
     }
 
-    public static String shapeString(Path fontPath, String text) throws IOException {
+    public static ShapeGlyph[] shapeString(Path fontPath, String text) throws IOException {
         if (fontPath == null || !Files.isRegularFile(fontPath))
             throw new IOException("Font path provided is not a file: %s".formatted(fontPath));
 
         if (text == null || text.isEmpty())
-            return "";
+            return new ShapeGlyph[0];
 
-        final String[] glyphs = shapeStringGlyphs(fontPath.toString(), text);
+        final int[] glyphs = shapeStringGlyphs(fontPath.toString(), text);
 
-        // TODO: Convert each glyph to Unicode
-        return String.join(",", glyphs);
+        final ShapeGlyph[] converted = new ShapeGlyph[glyphs.length / GLYPH_LENGTH];
+        for (int i = 0; i < converted.length; i++) {
+            converted[i] = new ShapeGlyph(
+                    glyphs[i * GLYPH_LENGTH],
+                    glyphs[i * GLYPH_LENGTH + 1],
+                    glyphs[i * GLYPH_LENGTH + 2],
+                    glyphs[i * GLYPH_LENGTH + 3],
+                    glyphs[i * GLYPH_LENGTH + 4]
+            );
+        }
+
+        return converted;
     }
 
-    private static native String[] shapeStringGlyphs(String fontPath, String text);
+    private static native int[] shapeStringGlyphs(String fontPath, String text);
 }
