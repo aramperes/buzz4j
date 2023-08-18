@@ -1,4 +1,4 @@
-import org.gradle.internal.jvm.Jvm
+import org.gradle.internal.os.OperatingSystem
 
 plugins {
     id 'java'
@@ -6,6 +6,9 @@ plugins {
 
 group 'dev.poire.buzz4j'
 version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -19,10 +22,19 @@ dependencies {
 test {
     def libDir = file("${project('buzz4jni').buildDir}/lib/main/debug")
     def hbLibDir = file("${rootDir}/harfbuzz/build/src")
-    def freeTypeDir = file("${rootDir}/harfbuzz/build/subprojects/freetype-2.13.0")
-    def pngDir = file("${rootDir}/harfbuzz/build/subprojects/libpng-1.6.39")
 
-    jvmArgs = ["-Djava.library.path=${pngDir.absolutePath};${freeTypeDir.absolutePath};${hbLibDir.absolutePath};${libDir.absolutePath}"]
+    def os = OperatingSystem.current();
+    if (os.isWindows()) {
+        def freeTypeDir = file("${rootDir}/harfbuzz/build/subprojects/freetype-2.13.0")
+        def pngDir = file("${rootDir}/harfbuzz/build/subprojects/libpng-1.6.39")
+
+        jvmArgs = ["-Djava.library.path=${pngDir.absolutePath};${freeTypeDir.absolutePath};${hbLibDir.absolutePath};${libDir.absolutePath}"]
+    } else if (os.isLinux()) {
+        jvmArgs = ["-Djava.library.path=${hbLibDir.absolutePath}:${libDir.absolutePath}"]
+    } else {
+        // macOS support?
+    }
+
     useJUnitPlatform()
 }
 

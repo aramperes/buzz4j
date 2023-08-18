@@ -26,7 +26,7 @@ ShapeGlyph{
 
 ## Compile
 
-There is a submodule for `harfbuzz`. Start by fetching the submodule sources.
+There is a submodule for `harfbuzz`. Start by fetching the submodule sources with `git submodule update`.
 
 Then, `cd harfbuzz` and follow the [official instructions](https://harfbuzz.github.io/building.html) (meson
 recommended):
