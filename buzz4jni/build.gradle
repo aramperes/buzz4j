@@ -28,11 +28,12 @@ library {
 
         def toolChain = binary.toolChain
         def hbLibDir = file("${rootDir}/harfbuzz/build/src")
-        def hbLib = file("${hbLibDir}/harfbuzz.lib")
         if (toolChain instanceof VisualCpp) {
+            def hbLib = file("${hbLibDir}/harfbuzz.lib")
             linkTask.linkerArgs.addAll(["/LIBPATH:${hbLibDir.absolutePath}", hbLib.absolutePath])
         } else if (toolChain instanceof GccCompatibleToolChain) {
-            // TODO: Link libraries
+            def hbLib = "harfbuzz"
+            linkTask.linkerArgs.addAll(["-L${hbLibDir.absolutePath}", "-l${hbLib}"])
         }
     }
 }

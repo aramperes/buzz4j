@@ -9,8 +9,8 @@ public class HarfBuzz {
     private static final int GLYPH_LENGTH = 5;
 
     static {
-        System.loadLibrary("png16-16");
-        System.loadLibrary("freetype-6");
+        // System.loadLibrary("png16");
+        // System.loadLibrary("freetype");
         System.loadLibrary("harfbuzz");
         System.loadLibrary("buzz4j");
     }
