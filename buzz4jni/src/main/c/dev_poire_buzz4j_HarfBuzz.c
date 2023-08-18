@@ -7,17 +7,17 @@
 extern "C" {
 #endif
 
-JNIEXPORT void JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBuffer
-  (JNIEnv *env, jclass clazz, jstring fontPath, jbyteArray buffer)
+JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBufferGlyphs
+  (JNIEnv *env, jclass clazz, jstring fontPath, jstring text)
   {
     // Convert Java types
-    char *filename = env->GetStringUTFChars(fontPath, nullptr);
-    jbyte *buffer_bytes = env->GetByteArrayElements(buffer, NULL);
+    const char *filename = env->GetStringUTFChars(fontPath, nullptr);
+    const char *textBuffer = env->GetStringUTFChars(text, nullptr);
 
     // Create HarfBuzz buffer
     hb_buffer_t *hb_buf;
     hb_buf = hb_buffer_create();
-    hb_buffer_add_utf8(hb_buf, buffer_bytes, -1, 0, -1);
+    hb_buffer_add_utf8(hb_buf, textBuffer, -1, 0, -1);
     hb_buffer_guess_segment_properties(hb_buf);
 
     // Load font
@@ -28,17 +28,23 @@ JNIEXPORT void JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBuffer
     // Apply shape
     hb_shape(font, hb_buf, NULL, 0);
 
-    // Update source buffer with new glyphs
-    buffer_bytes[0] = 123;
+    // TODO
+    // Build output array of glyphs
+    char msg[60] = "{hatever";
+    jobjectArray result;
+
+    result = (jobjectArray) env->NewObjectArray(5,
+         env->FindClass("java/lang/String"),
+         env->NewStringUTF("test"));
 
     // Cleanup
     hb_buffer_destroy(hb_buf);
     hb_font_destroy(font);
     hb_face_destroy(face);
     hb_blob_destroy(blob);
+    env->ReleaseStringUTFChars(text, textBuffer);
 
-    // Release buffer back to Java
-    env->ReleaseByteArrayElements(buffer, buffer_bytes, 0);
+    return result;
   }
 
 #ifdef __cplusplus

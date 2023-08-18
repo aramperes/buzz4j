@@ -7,13 +7,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-/*
- * Class:     dev_poire_buzz4j_HarfBuzz
- * Method:    shapeBuffer
- * Signature: (Ljava/lang/String;[B)V
- */
-JNIEXPORT void JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBuffer
-  (JNIEnv *env, jclass clazz, jstring fontPath, jbyteArray buffer);
+JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBufferGlyphs
+  (JNIEnv *env, jclass clazz, jstring fontPath, jstring text);
 
 #ifdef __cplusplus
 }

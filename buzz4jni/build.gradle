@@ -14,7 +14,7 @@ version '1.0-SNAPSHOT'
 library {
     binaries.configureEach { CppBinary binary ->
         def compileTask = binary.compileTask.get()
-        compileTask.includes.from("${Jvm.current().javaHome}/include")
+        compileTask.includes.from("${Jvm.current().javaHome}/include", "${rootDir}/harfbuzz/src")
 
         def osFamily = binary.targetPlatform.targetMachine.operatingSystemFamily
         if (osFamily.macOs) {
