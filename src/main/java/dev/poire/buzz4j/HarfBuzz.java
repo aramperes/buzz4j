@@ -9,8 +9,13 @@ public class HarfBuzz {
     private static final int GLYPH_LENGTH = 5;
 
     static {
-        // System.loadLibrary("png16");
-        // System.loadLibrary("freetype");
+        if (System.getProperty("os.name") != null
+                && System.getProperty("os.name").startsWith("Windows")) {
+            // Libraries are not assumed to be in PATH on Windows.
+            System.loadLibrary("png16-16");
+            System.loadLibrary("freetype-6");
+        }
+
         System.loadLibrary("harfbuzz");
         System.loadLibrary("buzz4j");
     }
