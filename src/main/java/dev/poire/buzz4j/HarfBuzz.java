@@ -17,7 +17,7 @@ public class HarfBuzz {
 
     public static ShapeGlyph[] shapeString(Path fontPath, String text) throws IOException {
         if (fontPath == null || !Files.isRegularFile(fontPath))
-            throw new IOException("Font path provided is not a file: %s".formatted(fontPath));
+            throw new IOException(String.format("Font path provided is not a file: %s", fontPath));
 
         if (text == null || text.isEmpty())
             return new ShapeGlyph[0];
