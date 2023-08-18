@@ -13,7 +13,7 @@ public class HarfBuzz {
         System.loadLibrary("png16-16");
         System.loadLibrary("freetype-6");
         System.loadLibrary("harfbuzz");
-        System.loadLibrary("buzz4jni");
+        System.loadLibrary("buzz4j");
     }
 
     public static ShapeGlyph[] shapeString(Path fontPath, String text) throws IOException {

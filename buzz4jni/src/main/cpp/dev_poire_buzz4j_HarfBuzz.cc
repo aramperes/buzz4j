@@ -34,6 +34,7 @@ JNIEXPORT jintArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeStringGlyphs
     hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(hb_buf, &glyph_count);
 
     // Build an [n * 5] array to encode glyph IDs and positions
+    // [glyphId] [advanceX] [advanceY] [offsetX] [offsetY]
     jintArray result;
     result = (jintArray) env->NewIntArray(glyph_count * 5);
     for (unsigned int i = 0; i < glyph_count; i++) {

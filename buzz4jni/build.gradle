@@ -8,6 +8,8 @@ group 'dev.poire.buzz4j'
 version '1.0-SNAPSHOT'
 
 library {
+    baseName = 'buzz4j'
+
     binaries.configureEach { CppSharedLibrary binary ->
         def compileTask = binary.compileTask.get()
         def linkTask = binary.linkTask.get()

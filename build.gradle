@@ -21,7 +21,6 @@ test {
     def hbLibDir = file("${rootDir}/harfbuzz/build/src")
     def freeTypeDir = file("${rootDir}/harfbuzz/build/subprojects/freetype-2.13.0")
     def pngDir = file("${rootDir}/harfbuzz/build/subprojects/libpng-1.6.39")
-    def zlibDir = file("${rootDir}/harfbuzz/build/subprojects/zlib-1.2.13")
 
     jvmArgs = ["-Djava.library.path=${pngDir.absolutePath};${freeTypeDir.absolutePath};${hbLibDir.absolutePath};${libDir.absolutePath}"]
     useJUnitPlatform()
