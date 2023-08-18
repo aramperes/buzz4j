@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBufferGlyphs
+JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeStringGlyphs
   (JNIEnv *env, jclass clazz, jstring fontPath, jstring text)
   {
     // Convert Java types
@@ -28,9 +28,12 @@ JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBufferGlyphs
     // Apply shape
     hb_shape(font, hb_buf, NULL, 0);
 
+    // Get glyph info
+    unsigned int glyph_count;
+    hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(hb_buf, &glyph_count);
+
     // TODO
     // Build output array of glyphs
-    char msg[60] = "{hatever";
     jobjectArray result;
 
     result = (jobjectArray) env->NewObjectArray(5,

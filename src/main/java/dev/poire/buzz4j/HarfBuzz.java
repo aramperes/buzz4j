@@ -7,6 +7,9 @@ import java.nio.file.Path;
 public class HarfBuzz {
 
     static {
+        System.loadLibrary("png16-16");
+        System.loadLibrary("freetype-6");
+        System.loadLibrary("harfbuzz");
         System.loadLibrary("buzz4jni");
     }
 

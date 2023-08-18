@@ -1,9 +1,5 @@
 import org.gradle.internal.jvm.Jvm
 
-/*
- * There is currently no "C application" plugin, so this build uses the "C++ application" plugin and then reconfigures it
- * to build C instead.
- */
 plugins {
     id 'cpp-library'
 }
@@ -12,8 +8,9 @@ group 'dev.poire.buzz4j'
 version '1.0-SNAPSHOT'
 
 library {
-    binaries.configureEach { CppBinary binary ->
+    binaries.configureEach { CppSharedLibrary binary ->
         def compileTask = binary.compileTask.get()
+        def linkTask = binary.linkTask.get()
         compileTask.includes.from("${Jvm.current().javaHome}/include", "${rootDir}/harfbuzz/src")
 
         def osFamily = binary.targetPlatform.targetMachine.operatingSystemFamily
@@ -25,13 +22,15 @@ library {
             compileTask.includes.from("${Jvm.current().javaHome}/include/win32")
         }
 
-        compileTask.source.from fileTree(dir: "src/main/c", include: "**/*.c")
+        compileTask.source.from fileTree(dir: "src/main/cpp", include: "**/*.cc")
 
         def toolChain = binary.toolChain
+        def hbLibDir = file("${rootDir}/harfbuzz/build/src")
+        def hbLib = file("${hbLibDir}/harfbuzz.lib")
         if (toolChain instanceof VisualCpp) {
-            compileTask.compilerArgs.addAll(["/TP"])
+            linkTask.linkerArgs.addAll(["/LIBPATH:${hbLibDir.absolutePath}", hbLib.absolutePath])
         } else if (toolChain instanceof GccCompatibleToolChain) {
-            compileTask.compilerArgs.addAll(["-x", "c", "-std=c11"])
+            // TODO: Link libraries
         }
     }
 }

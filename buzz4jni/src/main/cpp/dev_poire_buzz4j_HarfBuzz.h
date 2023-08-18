@@ -7,7 +7,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeBufferGlyphs
+JNIEXPORT jobjectArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeStringGlyphs
   (JNIEnv *env, jclass clazz, jstring fontPath, jstring text);
 
 #ifdef __cplusplus
