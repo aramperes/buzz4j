@@ -44,3 +44,20 @@ jobs:
           harfbuzz/build/src/harfbuzz.dll
           harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll
           harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll
+
+  harfbuzz-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+    - run: apt-get update && apt-get install -y meson pkg-config gtk-doc-tools gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev
+    - run: meson build --wrap-mode=default
+      working-directory: harfbuzz
+    - run: meson compile -C build
+      working-directory: harfbuzz
+    - uses: actions/upload-artifact@v3
+      with:
+        name: harfbuzz-linux
+        path: |
+          harfbuzz/build/src/libharfbuzz.so
