@@ -51,7 +51,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
-    - run: apt-get update && apt-get install -y meson pkg-config gtk-doc-tools gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev
+    - run: sudo apt-get update && sudo apt-get install -y meson pkg-config gtk-doc-tools gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev
     - run: meson build --wrap-mode=default
       working-directory: harfbuzz
     - run: meson compile -C build
