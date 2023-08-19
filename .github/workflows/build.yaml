@@ -21,7 +21,7 @@ jobs:
   #       name: Linux_Meson_Testlog
   #       path: builddir/meson-logs/testlog.txt
 
-  windows:
+  harfbuzz-windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -36,3 +36,11 @@ jobs:
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
+    - uses: actions/upload-artifact@v3
+      with:
+        name: harfbuzz-windows
+        path: |
+          harfbuzz/build/src/harfbuzz.lib
+          harfbuzz/build/src/harfbuzz.dll
+          harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll
+          harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll
