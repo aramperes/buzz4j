@@ -51,7 +51,7 @@ jobs:
     - run: ./gradlew build assembleRelease
     - uses: actions/upload-artifact@v3
       with:
-        name: buzz4j-linux
+        name: buzz4j-windows
         path: |
           buzz4jni/build/lib/main/release/buzz4j.dll
           build/libs/buzz4j-*.jar
@@ -79,7 +79,7 @@ jobs:
     - run: ./gradlew build assembleRelease
     - uses: actions/upload-artifact@v3
       with:
-        name: buzz4j-windows
+        name: buzz4j-linux
         path: |
           buzz4jni/build/lib/main/release/libbuzz4j.so
           build/libs/buzz4j-*.jar
