@@ -49,12 +49,17 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
     - run: ./gradlew build assembleRelease
+    - run: |
+        mkdir artifact
+        cp harfbuzz/build/src/harfbuzz.lib artifact
+        cp harfbuzz/build/src/harfbuzz.dll artifact
+        cp harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll artifact
+        cp harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll artifact
+        cp build/libs/buzz4j-*.jar artifact
     - uses: actions/upload-artifact@v3
       with:
         name: buzz4j-windows
-        path: |
-          buzz4jni/build/lib/main/release/buzz4j.dll
-          build/libs/buzz4j-*.jar
+        path: artifact/*
 
   linux:
     runs-on: ubuntu-latest
@@ -78,8 +83,11 @@ jobs:
         java-version: '17'
     - run: ./gradlew build assembleRelease
     - uses: actions/upload-artifact@v3
+    - run: |
+        mkdir artifact
+        cp harfbuzz/build/src/libharfbuzz.so artifact
+        cp build/libs/buzz4j-*.jar artifact
+    - uses: actions/upload-artifact@v3
       with:
         name: buzz4j-linux
-        path: |
-          buzz4jni/build/lib/main/release/libbuzz4j.so
-          build/libs/buzz4j-*.jar
+        path: artifact/*
