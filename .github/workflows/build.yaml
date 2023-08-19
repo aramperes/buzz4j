@@ -44,6 +44,10 @@ jobs:
           harfbuzz/build/src/harfbuzz.dll
           harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll
           harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
     - run: ./gradlew build assembleRelease
     - uses: actions/upload-artifact@v3
       with:
