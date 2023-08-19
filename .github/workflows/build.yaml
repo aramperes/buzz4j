@@ -70,7 +70,6 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
     - run: ./gradlew build assembleRelease
-    - uses: actions/upload-artifact@v3
     - run: |
         mkdir artifact
         cp harfbuzz/build/src/libharfbuzz.so artifact
