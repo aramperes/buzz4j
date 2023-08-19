@@ -36,14 +36,6 @@ jobs:
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
-    - uses: actions/upload-artifact@v3
-      with:
-        name: harfbuzz-windows
-        path: |
-          harfbuzz/build/src/harfbuzz.lib
-          harfbuzz/build/src/harfbuzz.dll
-          harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll
-          harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll
     - uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
@@ -53,8 +45,9 @@ jobs:
         mkdir artifact
         cp harfbuzz/build/src/harfbuzz.lib artifact
         cp harfbuzz/build/src/harfbuzz.dll artifact
-        cp harfbuzz/build/subprojects/freetype-2.13.0/freetype-6.dll artifact
-        cp harfbuzz/build/subprojects/libpng-1.6.39/png16-16.dll artifact
+        cp harfbuzz/build/subprojects/freetype-*/freetype-6.dll artifact
+        cp harfbuzz/build/subprojects/libpng-*/png16-16.dll artifact
+        cp buzz4jni/build/lib/main/release/libbuzz4j.so artifact
         cp build/libs/buzz4j-*.jar artifact
     - uses: actions/upload-artifact@v3
       with:
@@ -72,11 +65,6 @@ jobs:
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
-    - uses: actions/upload-artifact@v3
-      with:
-        name: harfbuzz-linux
-        path: |
-          harfbuzz/build/src/libharfbuzz.so
     - uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
@@ -86,6 +74,7 @@ jobs:
     - run: |
         mkdir artifact
         cp harfbuzz/build/src/libharfbuzz.so artifact
+        cp buzz4jni/build/lib/main/release/buzz4j.dll artifact
         cp build/libs/buzz4j-*.jar artifact
     - uses: actions/upload-artifact@v3
       with:
