@@ -37,6 +37,14 @@ public final class ShapeGlyph {
         return offsetY;
     }
 
+    public int effectiveWidth() {
+        return advanceX + offsetX;
+    }
+
+    public int effectiveHeight() {
+        return advanceY + offsetY;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
