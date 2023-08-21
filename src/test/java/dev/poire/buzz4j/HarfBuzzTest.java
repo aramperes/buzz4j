@@ -37,7 +37,7 @@ public class HarfBuzzTest {
 
     @Test
     public void testShapeArabic() throws Exception {
-        String input = "العربية";
+        String input = "\u0627\u0644\u0639\u0631\u0628\u064A\u0629";
         ShapeGlyph[] outputCombined = HarfBuzz.shapeString(font(), input);
 
         Assertions.assertArrayEquals(new ShapeGlyph[]{
