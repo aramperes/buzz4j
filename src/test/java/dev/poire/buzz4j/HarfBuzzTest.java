@@ -39,17 +39,33 @@ public class HarfBuzzTest {
     public void testShapeArabic() throws Exception {
         String input = "العربية";
         ShapeGlyph[] outputCombined = HarfBuzz.shapeString(font(), input);
-        int sumCombined = Arrays.stream(outputCombined).mapToInt(ShapeGlyph::effectiveWidth).sum();
-        int sumSplit = Arrays.stream(input.split("")).flatMap(c -> {
+
+        Assertions.assertArrayEquals(new ShapeGlyph[]{
+                new ShapeGlyph(5157, 486, 0, 0, 0),
+                new ShapeGlyph(5380, 373, 0, 0, 0),
+                new ShapeGlyph(3977, 269, 0, 0, 0),
+                new ShapeGlyph(4860, 396, 0, 0, 0),
+                new ShapeGlyph(3887, 521, 0, 0, 0),
+                new ShapeGlyph(4543, 260, 0, 0, 0),
+                new ShapeGlyph(3921, 238, 0, 0, 0)
+        }, outputCombined);
+
+        ShapeGlyph[] outputSplit = Arrays.stream(input.split("")).flatMap(c -> {
             try {
                 return Arrays.stream(HarfBuzz.shapeString(font(), c));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }).mapToInt(ShapeGlyph::effectiveWidth).sum();
+        }).toArray(ShapeGlyph[]::new);
 
-        Assertions.assertNotEquals(sumCombined, sumSplit, "Shaping Arabic word should result in narrower shape");
-        Assertions.assertEquals(9109, sumCombined);
-        Assertions.assertEquals(9179, sumSplit);
+        Assertions.assertArrayEquals(new ShapeGlyph[]{
+                new ShapeGlyph(3921, 238, 0, 0, 0),
+                new ShapeGlyph(4541, 695, 0, 0, 0),
+                new ShapeGlyph(3883, 507, 0, 0, 0),
+                new ShapeGlyph(4859, 367, 0, 0, 0),
+                new ShapeGlyph(3975, 993, 0, 0, 0),
+                new ShapeGlyph(5376, 760, 0, 0, 0),
+                new ShapeGlyph(5156, 405, 0, 0, 0)
+        }, outputSplit);
     }
 }
