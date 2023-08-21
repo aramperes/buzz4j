@@ -50,8 +50,6 @@ JNIEXPORT jintArray JNICALL Java_dev_poire_buzz4j_HarfBuzz_shapeStringGlyphs
     hb_font_destroy(font);
     hb_face_destroy(face);
     hb_blob_destroy(blob);
-    delete[] glyph_info;
-    delete[] glyph_pos;
     env->ReleaseStringUTFChars(text, textBuffer);
     env->ReleaseStringUTFChars(fontPath, filename);
 
