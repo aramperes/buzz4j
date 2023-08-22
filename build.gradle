@@ -26,8 +26,9 @@ test {
     def os = OperatingSystem.current();
     if (os.isWindows()) {
         def freeTypeDir = file("${rootDir}/harfbuzz/build/subprojects/freetype-2.13.0")
+        def pngDir = file("${rootDir}/harfbuzz/build/subprojects/libpng-1.6.39")
 
-        jvmArgs = ["-Djava.library.path=${freeTypeDir.absolutePath};${hbLibDir.absolutePath};${libDir.absolutePath}"]
+        jvmArgs = ["-Djava.library.path=${pngDir.absolutePath};${freeTypeDir.absolutePath};${hbLibDir.absolutePath};${libDir.absolutePath}"]
     } else if (os.isLinux()) {
         jvmArgs = ["-Djava.library.path=${hbLibDir.absolutePath}:${libDir.absolutePath}"]
     } else {

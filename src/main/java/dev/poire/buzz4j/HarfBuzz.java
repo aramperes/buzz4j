@@ -11,7 +11,8 @@ public class HarfBuzz {
     static {
         if (System.getProperty("os.name") != null
                 && System.getProperty("os.name").startsWith("Windows")) {
-            // Freetype is not assumed to be in PATH on Windows.
+            // Libraries are not assumed to be in PATH on Windows.
+            System.loadLibrary("png16-16");
             System.loadLibrary("freetype-6");
         }
 
