@@ -1,11 +1,13 @@
 import org.gradle.internal.os.OperatingSystem
 
 plugins {
-    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'dev.poire.buzz4j'
-version '1.0-SNAPSHOT'
+version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -39,3 +41,70 @@ test {
 }
 
 test.dependsOn ':buzz4jni:linkDebug'
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'buzz4j'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'buzz4j'
+                description = 'Java bindings for HarfBuzz, a text-shaping library.'
+                url = 'https://github.com/aramperes/buzz4j'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://raw.githubusercontent.com/aramperes/buzz4j/main/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'aramperes'
+                        name = 'Aram Peres'
+                        email = 'aram.peres@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/arampres/buzz4j.git'
+                    developerConnection = 'scm:git:https://github.com/arampres/buzz4j.git'
+                    url = 'https://github.com/arampres/buzz4j'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            credentials(PasswordCredentials) {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}

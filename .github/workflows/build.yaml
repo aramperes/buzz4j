@@ -42,6 +42,14 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
+    - name: Unpack Gradle secrets
+      run: |
+        echo "$OSSRH_GPG" | base64 -d > .gradle/ossrh.gpg
+        echo "$GRADLE_PROPERTIES" | base64 -d > "$HOME/.gradle/gradle.properties"
+      shell: bash
+      env:
+        OSSRH_GPG: ${{secrets.OSSRH_GPG}}
+        GRADLE_PROPERTIES: ${{secrets.GRADLE_PROPERTIES}}
     - run: sudo apt-get update && sudo apt-get install -y meson pkg-config gtk-doc-tools gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev
     - run: meson setup build --wrap-mode=default --buildtype=release -Dfreetype=enabled -Ddirectwrite=enabled
       working-directory: harfbuzz
@@ -51,7 +59,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-    - run: ./gradlew -i build assembleRelease
+    - run: ./gradlew -i assembleRelease publish
     - run: |
         mkdir artifact
         cp harfbuzz/build/src/libharfbuzz.so artifact
