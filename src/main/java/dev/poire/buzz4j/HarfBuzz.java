@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Java bindings for HarfBuzz.
+ */
 public class HarfBuzz {
 
     private static final int GLYPH_LENGTH = 5;
@@ -20,6 +23,14 @@ public class HarfBuzz {
         System.loadLibrary("buzz4j");
     }
 
+    /**
+     * Apply text-shaping to an input string. The result is an array of glyphs, with their drawing dimensions.
+     *
+     * @param fontPath Path to the font
+     * @param text Input text
+     * @return Array of {@link ShapeGlyph} (glyph information returned by HarfBuzz)
+     * @throws IOException Invalid font file
+     */
     public static ShapeGlyph[] shapeString(Path fontPath, String text) throws IOException {
         if (fontPath == null || !Files.isRegularFile(fontPath))
             throw new IOException(String.format("Font path provided is not a file: %s", fontPath));

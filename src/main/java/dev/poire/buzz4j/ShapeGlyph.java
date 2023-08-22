@@ -2,6 +2,9 @@ package dev.poire.buzz4j;
 
 import java.util.Objects;
 
+/**
+ * Represents a glyph with drawing information returned from HarfBuzz.
+ */
 public final class ShapeGlyph {
     private final int glyphId;
     private final int advanceX;
@@ -9,7 +12,7 @@ public final class ShapeGlyph {
     private final int offsetX;
     private final int offsetY;
 
-    public ShapeGlyph(int glyphId, int advanceX, int advanceY, int offsetX, int offsetY) {
+    ShapeGlyph(int glyphId, int advanceX, int advanceY, int offsetX, int offsetY) {
         this.glyphId = glyphId;
         this.advanceX = advanceX;
         this.advanceY = advanceY;
@@ -17,30 +20,58 @@ public final class ShapeGlyph {
         this.offsetY = offsetY;
     }
 
+    /**
+     * The integer ID of the glpyh.
+     * @return the integer ID
+     */
     public int glyphId() {
         return glyphId;
     }
 
+    /**
+     * By how much the glyph advances the text shape on the X axis
+     * @return the advance on X axis
+     */
     public int advanceX() {
         return advanceX;
     }
 
+    /**
+     * By how much the glyph advances the text shape on the Y axis
+     * @return the advance on Y axis
+     */
     public int advanceY() {
         return advanceY;
     }
 
+    /**
+     * By how much the glyph should be offseted on the X axis
+     * @return the offset on X axis
+     */
     public int offsetX() {
         return offsetX;
     }
 
+    /**
+     * By how much the glyph should be offseted on the Y axis
+     * @return the offset on Y axis
+     */
     public int offsetY() {
         return offsetY;
     }
 
+    /**
+     * The effective width of the glyph.
+     * @return the sum of offset and advance
+     */
     public int effectiveWidth() {
         return advanceX + offsetX;
     }
 
+    /**
+     * The effective height of the glyph.
+     * @return the sum of offset and advance
+     */
     public int effectiveHeight() {
         return advanceY + offsetY;
     }
