@@ -22,7 +22,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-    - run: ./gradlew build assembleRelease
+    - run: ./gradlew -i build assembleRelease
     - run: |
         mkdir artifact
         cp harfbuzz/build/src/harfbuzz.lib artifact
@@ -50,7 +50,7 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-    - run: ./gradlew build assembleRelease
+    - run: ./gradlew -i build assembleRelease
     - run: |
         mkdir artifact
         cp harfbuzz/build/src/libharfbuzz.so artifact
