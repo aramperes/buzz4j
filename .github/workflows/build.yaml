@@ -3,24 +3,6 @@ name: build
 on: [push, pull_request]
 
 jobs:
-  # linux:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v1
-  #   - uses: actions/setup-python@v1
-  #     with:
-  #       python-version: '3.x'
-  #   - run: pip install meson ninja
-  #   - run: meson setup builddir/
-  #     env:
-  #       CC: gcc
-  #   - run: meson test -C builddir/ -v
-  #   - uses: actions/upload-artifact@v1
-  #     if: failure()
-  #     with:
-  #       name: Linux_Meson_Testlog
-  #       path: builddir/meson-logs/testlog.txt
-
   windows:
     runs-on: windows-latest
     steps:
@@ -32,7 +14,7 @@ jobs:
       with:
         python-version: '3.x'
     - run: pip install meson ninja
-    - run: meson build --wrap-mode=default
+    - run: meson setup build --wrap-mode=default --buildtype=release -Dfreetype=enabled -Ddirectwrite=enabled
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
@@ -46,7 +28,6 @@ jobs:
         cp harfbuzz/build/src/harfbuzz.lib artifact
         cp harfbuzz/build/src/harfbuzz.dll artifact
         cp harfbuzz/build/subprojects/freetype-*/freetype-6.dll artifact
-        cp harfbuzz/build/subprojects/libpng-*/png16-16.dll artifact
         cp buzz4jni/build/lib/main/release/buzz4j.dll artifact
         cp build/libs/buzz4j-*.jar artifact
     - uses: actions/upload-artifact@v3
@@ -61,7 +42,7 @@ jobs:
       with:
         submodules: 'true'
     - run: sudo apt-get update && sudo apt-get install -y meson pkg-config gtk-doc-tools gcc g++ libfreetype6-dev libglib2.0-dev libcairo2-dev
-    - run: meson build --wrap-mode=default
+    - run: meson setup build --wrap-mode=default --buildtype=release -Dfreetype=enabled -Ddirectwrite=enabled
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
