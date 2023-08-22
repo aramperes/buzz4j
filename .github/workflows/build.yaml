@@ -18,10 +18,6 @@ jobs:
       working-directory: harfbuzz
     - run: meson compile -C build
       working-directory: harfbuzz
-    - uses: actions/upload-artifact@v3
-      with:
-        name: windows-freetype
-        path: harfbuzz/build/subprojects/freetype-*/freetype-6.dll
     - uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
@@ -32,6 +28,7 @@ jobs:
         cp harfbuzz/build/src/harfbuzz.lib artifact
         cp harfbuzz/build/src/harfbuzz.dll artifact
         cp harfbuzz/build/subprojects/freetype-*/freetype-6.dll artifact
+        cp harfbuzz/build/subprojects/libpng-*/png16-16.dll artifact
         cp buzz4jni/build/lib/main/release/buzz4j.dll artifact
         cp build/libs/buzz4j-*.jar artifact
     - uses: actions/upload-artifact@v3
