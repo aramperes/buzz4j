@@ -92,8 +92,8 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
             credentials(PasswordCredentials) {
-                username = project.property('ossrhUsername')
-                password = project.property('ossrhPassword')
+                username = project.findProperty('ossrhUsername') ?: ''
+                password = project.findProperty('ossrhPassword') ?: ''
             }
         }
     }
