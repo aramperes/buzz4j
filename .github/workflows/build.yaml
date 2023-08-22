@@ -44,6 +44,7 @@ jobs:
         submodules: 'true'
     - name: Unpack Gradle secrets
       run: |
+        mkdir .gradle "$HOME/.gradle"
         echo "$OSSRH_GPG" | base64 -d > .gradle/ossrh.gpg
         echo "$GRADLE_PROPERTIES" | base64 -d > "$HOME/.gradle/gradle.properties"
       shell: bash
