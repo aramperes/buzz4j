@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'dev.poire.buzz4j'
-version '1.0.0'
+version '1.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -92,8 +92,8 @@ publishing {
             url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
             credentials(PasswordCredentials) {
-                username = ossrhUsername
-                password = ossrhPassword
+                username = project.property('ossrhUsername')
+                password = project.property('ossrhPassword')
             }
         }
     }
