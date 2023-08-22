@@ -1,6 +1,12 @@
+<img align="right" alt="buzz4j" width="150" src=".github/buzz4j.png">
+
 # buzz4j
 
-Unofficial bindings for [HarfBuzz](https://harfbuzz.github.io), in Java.
+Java bindings for [HarfBuzz](https://harfbuzz.github.io).
+
+[![MIT licensed](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Build status](https://github.com/aramperes/buzz4j/actions/workflows/build.yaml/badge.svg)](https://github.com/aramperes/buzz4j/actions)
+[![Latest Release](https://img.shields.io/github/v/tag/aramperes/buzz4j?label=release)](https://github.com/aramperes/buzz4j/releases/latest)
 
 ## Usage
 
